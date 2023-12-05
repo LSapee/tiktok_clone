@@ -1,16 +1,11 @@
 # tiktok_clone
 
-A new Flutter project.
+tiktok_clone 코딩 프로젝트
 
-## Getting Started
+1. setup
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```
+ Sizes Class = 미리 사용할 사이즈를 규격화 정의 해준 dart 파일
+ Gaps Class = 미리 Sized box를 정의하여 높이,너비 margin을 줄때 사용함 빈 상자로 사용
+ 
+```
