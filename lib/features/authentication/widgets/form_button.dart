@@ -5,9 +5,10 @@ class FormButton extends StatelessWidget {
   const FormButton({
     super.key,
     required this.disabled,
+    required this.buttonText
   });
   final bool disabled;
-
+  final String buttonText;
   @override
   Widget build(BuildContext context) {
     return FractionallySizedBox(
@@ -35,7 +36,7 @@ class FormButton extends StatelessWidget {
             fontWeight: FontWeight.w600,
           ),
           child: Text(
-            "Next",
+            buttonText,
             textAlign: TextAlign.center,
           ),
         ),

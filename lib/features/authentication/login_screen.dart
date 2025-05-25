@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/authentication/login_form_screen.dart';
 import 'package:tiktok_clone/features/authentication/widgets/auth_button.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -11,11 +12,17 @@ class LoginScreen extends StatelessWidget {
     // sign 페이지에서 push로 올린 화면을 pop() 처리 해서 다시 sign 페이지로
     Navigator.of(context).pop();
   }
+  // 이메일 로그인 페이지로 이동
+  void _onEmailLoginTap(BuildContext context){
+    Navigator.of(context).push(
+      MaterialPageRoute(builder:(context) => const LoginFormScreen())
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: const SafeArea(
+      body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(
             horizontal: Sizes.size40,
@@ -23,7 +30,7 @@ class LoginScreen extends StatelessWidget {
           child: Column(
             children: [
               Gaps.v80,
-              Text(
+              const Text(
                 "Log in to TikTok",
                 style: TextStyle(
                   fontSize: Sizes.size24,
@@ -31,7 +38,7 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
               Gaps.v20,
-              Text(
+              const Text(
                 "Manage your account, check notifications, comment on videos, and more.",
                 style: TextStyle(
                   fontSize: Sizes.size12,
@@ -40,9 +47,12 @@ class LoginScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               Gaps.v40,
-              AuthButton(
-                icon: FaIcon(FontAwesomeIcons.solidUser),
-                text: "Ues email & password",
+              GestureDetector(
+                onTap: () => _onEmailLoginTap(context),
+                child: AuthButton(
+                  icon: FaIcon(FontAwesomeIcons.solidUser),
+                  text: "Ues email & password",
+                ),
               ),
               Gaps.v16,
               AuthButton(
