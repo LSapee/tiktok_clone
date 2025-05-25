@@ -5,9 +5,11 @@ class FormButton extends StatelessWidget {
   const FormButton({
     super.key,
     required this.disabled,
+    // 버튼 텍스트 변경을 위해 추가함.
     required this.buttonText
   });
   final bool disabled;
+  // 버튼 텍스트 변경을 위해 추가함.
   final String buttonText;
   @override
   Widget build(BuildContext context) {
@@ -36,6 +38,7 @@ class FormButton extends StatelessWidget {
             fontWeight: FontWeight.w600,
           ),
           child: Text(
+            // 버튼 텍스트 변경을 위해 변경함
             buttonText,
             textAlign: TextAlign.center,
           ),
