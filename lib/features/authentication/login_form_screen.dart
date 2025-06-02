@@ -12,20 +12,21 @@ class LoginFormScreen extends StatefulWidget {
 }
 
 class _LoginRomScreenState extends State<LoginFormScreen> {
-
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  Map<String,String> formDate ={};
-  void _onSubmitTap(){
-    if(_formKey.currentState!=null){
-      if(_formKey.currentState!.validate()){
+  Map<String, String> formDate = {};
+
+  void _onSubmitTap() {
+    if (_formKey.currentState != null) {
+      if (_formKey.currentState!.validate()) {
         _formKey.currentState!.save();
-        Navigator.of(context).push(
-          MaterialPageRoute(builder: (context)=>const InterestsScreen())
+        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
+          builder: (context) => const InterestsScreen(),
+        ),
+            (route) => false,
         );
       }
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -38,51 +39,44 @@ class _LoginRomScreenState extends State<LoginFormScreen> {
           horizontal: Sizes.size36,
         ),
         child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              TextFormField(
-                decoration:const InputDecoration(
-                  hintText: "Email"
+            key: _formKey,
+            child: Column(
+              children: [
+                TextFormField(
+                    decoration: const InputDecoration(hintText: "Email"),
+                    validator: (value) {
+                      if (value != null && value.isEmpty) {
+                        return "Please write your email";
+                      }
+                      return null;
+                    },
+                    onSaved: (newValue) {
+                      if (newValue != null) {
+                        formDate['email'] = newValue;
+                      }
+                    }),
+                Gaps.v16,
+                TextFormField(
+                  decoration: const InputDecoration(hintText: "Password"),
+                  validator: (value) {
+                    if (value != null && value.isEmpty) {
+                      return "Please write your password";
+                    }
+                    return null;
+                  },
+                  onSaved: (newValue) {
+                    if (newValue != null) {
+                      formDate['password'] = newValue;
+                    }
+                  },
                 ),
-                validator: (value){
-                  if(value != null && value.isEmpty){
-                    return "Please write your email";
-                  }
-                  return null;
-                },
-                onSaved: (newValue) {
-                  if (newValue != null) {
-                    formDate['email'] = newValue;
-                  }
-                }
-              ),
-              Gaps.v16,
-              TextFormField(
-                decoration:const InputDecoration(
-                    hintText: "Password"
-                ),
-                validator: (value){
-                  if(value != null && value.isEmpty){
-                    return "Please write your password";
-                  }
-                  return null;
-                },
-                onSaved: (newValue){
-                  if(newValue != null){
-                    formDate['password']= newValue;
-                  }
-                },
-              ),
-              Gaps.v28,
-              GestureDetector(
-                onTap: _onSubmitTap,
-                    child: const FormButton(
-                        disabled : false,
-                        buttonText : "Login"
-                    ))
-            ],
-          )),
+                Gaps.v28,
+                GestureDetector(
+                    onTap: _onSubmitTap,
+                    child:
+                        const FormButton(disabled: false, buttonText: "Login"))
+              ],
+            )),
       ),
     );
   }
