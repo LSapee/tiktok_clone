@@ -5,6 +5,7 @@ import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/navigation/widgets/nav_tab.dart';
 import 'package:tiktok_clone/features/navigation/widgets/post_video_button.dart';
+import 'package:tiktok_clone/features/videos/video_screen.dart';
 
 class MainNavigation extends StatefulWidget {
   const MainNavigation({super.key});
@@ -54,11 +55,12 @@ class _MainNavigationState extends State<MainNavigation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: _selectedIndex==0 ? Colors.black : Colors.white,
       body: Stack(
         children: [
           Offstage(
             offstage: _selectedIndex != 0,
-            child: Text("감자"),
+            child: VideoTimelineScreen(),
           ),
           Offstage(
             offstage: _selectedIndex != 1,
