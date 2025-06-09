@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/videos/widgets/video_button.dart';
+import 'package:tiktok_clone/features/videos/widgets/video_comments.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
@@ -76,8 +77,13 @@ class _VideoPostState extends State<VideoPost>
   }
 
   void _onVisibilityChanged(VisibilityInfo info) {
-    if (info.visibleFraction == 1 && !_videoPlayerController.value.isPlaying) {
+    if (info.visibleFraction == 1 &&
+        !_isPaused &&
+        !_videoPlayerController.value.isPlaying) {
       _videoPlayerController.play();
+    }
+    if(_videoPlayerController.value.isPlaying && info.visibleFraction== 0){
+      _onTogglePause();
     }
   }
 
@@ -92,6 +98,19 @@ class _VideoPostState extends State<VideoPost>
     setState(() {
       _isPaused = !_isPaused;
     });
+  }
+
+  void _onCommentsTap(BuildContext context) async {
+    if (_videoPlayerController.value.isPlaying) {
+      // 백그라운드 비디오 재상 멈추기.
+      _onTogglePause();
+    }
+    // 아래에서 올라오는 모달.
+    await showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        backgroundColor: Colors.transparent,
+        builder: (context) => VideoComments());
   }
 
   @override
@@ -141,7 +160,7 @@ class _VideoPostState extends State<VideoPost>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "깜자",
+                  "틱톡",
                   style: TextStyle(
                     fontSize: Sizes.size20,
                     color: Colors.white,
@@ -150,7 +169,7 @@ class _VideoPostState extends State<VideoPost>
                 ),
                 Gaps.v10,
                 Text(
-                  "깜자나라의 깜자마을 ",
+                  "틱톡클론코딩",
                   style: TextStyle(
                     fontSize: Sizes.size12,
                     color: Colors.white,
@@ -162,39 +181,42 @@ class _VideoPostState extends State<VideoPost>
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     // 해시태그? 더보기  나중에 직접 만들어 볼 곳
-                    Text("aasdsa"),
-                    Text(" ..."),
+                    Text("#틱톡"),
+                    Text("#클론코딩"),
                   ],
                 )
               ],
             ),
           ),
           Positioned(
-            bottom:20,
-              right:10,
+              bottom: 20,
+              right: 10,
               child: Column(
-            children: [
-              CircleAvatar(
-                radius: 25,
-                backgroundColor: Colors.black,
-                foregroundColor: Colors.white,
-                foregroundImage: NetworkImage(
-                  //url
-                  "https://avatars.githubusercontent.com/u/91775368?v=4",
-
-                ),
-                child:Text(
-                    "깜자"
-                ),
-              ),
-              Gaps.v20,
-              VideoButton(icon: FontAwesomeIcons.solidHeart, text: "2.9M"),
-              Gaps.v20,
-              VideoButton(icon: FontAwesomeIcons.solidComment, text: "33K"),
-              Gaps.v20,
-              VideoButton(icon: FontAwesomeIcons.share, text: "Share"),
-            ],
-          ))
+                children: [
+                  CircleAvatar(
+                    radius: 25,
+                    backgroundColor: Colors.black,
+                    foregroundColor: Colors.white,
+                    foregroundImage: NetworkImage(
+                      //url
+                      "https://avatars.githubusercontent.com/u/91775368?v=4",
+                    ),
+                    child: Text("깜자"),
+                  ),
+                  Gaps.v20,
+                  GestureDetector(
+                    onTap: () =>{},
+                    child: VideoButton(
+                        icon: FontAwesomeIcons.solidHeart, text: "2.9M"),
+                  ),
+                  Gaps.v20,
+                  GestureDetector(
+                      onTap: () => _onCommentsTap(context),
+                      child: VideoButton(icon: FontAwesomeIcons.solidComment, text: "33K")),
+                  Gaps.v20,
+                  VideoButton(icon: FontAwesomeIcons.share, text: "Share"),
+                ],
+              ))
         ],
       ),
     );
